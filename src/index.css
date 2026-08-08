@@ -1,0 +1,288 @@
+/* src/index.css */
+
+:root {
+  --bg: #f6f7fb;
+  --card-bg: #ffffff;
+  --border: #e2e4ea;
+  --text: #1f2330;
+  --text-muted: #6b7280;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --success: #16a34a;
+  --success-hover: #15803d;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-hover: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  height: 100%;
+}
+
+#root {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 32px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+h2 { font-size: 24px; margin-bottom: 16px; }
+h3 { font-size: 16px; color: #374151; margin-bottom: 10px; }
+p { color: var(--text-muted); }
+
+/* ---------- Forms (Login / Signup) ---------- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 380px;
+  margin: 40px auto 0;
+  background: var(--card-bg);
+  padding: 28px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+form h2 { text-align: center; margin-bottom: 4px; }
+form p { text-align: center; font-size: 13px; margin: 4px 0 0; }
+form a { color: var(--primary); text-decoration: none; font-weight: 600; }
+form a:hover { text-decoration: underline; }
+
+/* ---------- Inputs ---------- */
+input {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fafafa;
+  color: var(--text);
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  width: 100%;
+  margin: 0 8px 8px 0;
+}
+input:hover { border-color: #c7cad3; }
+input:focus {
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+}
+input::placeholder { color: #9ca3af; }
+
+/* ---------- Buttons ---------- */
+button {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+}
+button:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+button:active { transform: translateY(0); box-shadow: none; }
+button:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+button.btn-primary {
+  background: var(--primary); border-color: var(--primary); color: #fff;
+}
+button.btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+
+button.btn-success {
+  background: var(--success); border-color: var(--success); color: #fff;
+}
+button.btn-success:hover { background: var(--success-hover); border-color: var(--success-hover); }
+
+button.btn-danger {
+  background: var(--danger-bg); border-color: #fecaca; color: var(--danger);
+}
+button.btn-danger:hover { background: #fee2e2; }
+
+button.btn-ghost {
+  background: transparent; border-color: transparent; color: var(--text-muted);
+  padding: 6px 4px;
+}
+button.btn-ghost:hover { box-shadow: none; transform: none; color: var(--text); text-decoration: underline; }
+
+/* ---------- Error banner ---------- */
+.error-banner {
+  background: var(--danger-bg);
+  color: var(--danger);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* ---------- Cards (Project / Education / Skill entries) ---------- */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 14px;
+  transition: box-shadow .15s ease;
+}
+.card:hover { box-shadow: var(--shadow-hover); }
+
+/* ---------- Section header row (title + add button) ---------- */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ---------- Bullet row inside a project card ---------- */
+.bullet-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 6px;
+}
+.bullet-row input { margin: 0; flex: 1; }
+
+/* ---------- Dashboard list ---------- */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  transition: box-shadow .15s ease, transform .1s ease;
+}
+ul li:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
+ul li span { font-weight: 600; }
+
+/* ---------- Page header (Dashboard / Editor top bar) ---------- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* ---------- Action bar (Save / Export at bottom of editor) ---------- */
+.action-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Misc ---------- */
+.loading-text {
+  text-align: center;
+  margin-top: 60px;
+  color: var(--text-muted);
+}
+
+/* ---------- App Header ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 40px;
+}
+
+.app-header-brand {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-header-brand:hover {
+  color: var(--primary);
+}
+
+.app-header .btn-ghost {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.app-header .btn-ghost:hover {
+  background: var(--danger-bg);
+  border-color: #fecaca;
+  color: var(--danger);
+  text-decoration: none;
+}
+
+/* ---------- Auth page centering ---------- */
+.auth-page {
+  min-height: calc(100vh - 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-page form {
+  margin: 0;
+  width: 440px;
+  max-width: 90vw;
+  padding: 44px 40px;
+}
+
+.auth-page form h2 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.auth-page input {
+  padding: 13px 14px;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.auth-page button[type="submit"],
+.auth-page button.btn-primary {
+  padding: 13px 16px;
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.auth-page form p {
+  font-size: 14px;
+  margin-top: 8px;
+}
