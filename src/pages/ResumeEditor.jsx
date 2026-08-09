@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../api/client";
-
+import { useAuth } from "../context/AuthContext";
 export default function ResumeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,9 +15,14 @@ export default function ResumeEditor() {
   const [syncingSkills, setSyncingSkills] = useState(false);
   const [skillsSyncError, setSkillsSyncError] = useState("");
 
-  useEffect(() => {
+   useEffect(() => {
+    if (initializing) return;
+    if (!token) {
+      navigate("/login");
+      return;
+    }
     fetchResume();
-  }, [id]);
+  }, [id, token, initializing]);
 
   async function fetchResume() {
     try {
@@ -389,7 +394,7 @@ export default function ResumeEditor() {
           />
 
           <div style={{ marginTop: 12 }}>
-            <strong>Profile Links</strong>
+            <strong style={{marginRight:12}}>Profile Links</strong>
             {(resume.personal_info?.links || []).map((link, index) => (
               <div key={index} className="bullet-row">
                 <input
