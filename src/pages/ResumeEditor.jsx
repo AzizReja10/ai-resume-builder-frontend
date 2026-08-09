@@ -119,6 +119,8 @@ export default function ResumeEditor() {
       const generated = res.data;
 
       const mergedSkills = mergeSkills(resume.skills, generated.skills || []);
+      const mergedLinks = mergeLinks(resume.personal_info?.links || [], generated.profile_links || []);
+      const mergedEducation = mergeEducation(resume.education, generated.education || []);
 
       setResume({
         ...resume,
@@ -133,6 +135,8 @@ export default function ResumeEditor() {
           },
         ],
         skills: mergedSkills,
+        personal_info: { ...resume.personal_info, links: mergedLinks },
+        education: mergedEducation,
       });
       setGithubUrl("");
     } catch (err) {
@@ -166,6 +170,37 @@ export default function ResumeEditor() {
       }
     }
 
+    return merged;
+  }
+
+  function mergeLinks(existing, incoming) {
+    const merged = [...existing];
+    for (const link of incoming) {
+      const alreadyExists = merged.some(
+        (l) => l.url.trim().toLowerCase() === link.url.trim().toLowerCase()
+      );
+      if (!alreadyExists && link.url) {
+        merged.push({ label: link.label, url: link.url });
+      }
+    }
+    return merged;
+  }
+
+  function mergeEducation(existing, incoming) {
+    const merged = [...existing];
+    for (const edu of incoming) {
+      const alreadyExists = merged.some(
+        (e) => e.institution.trim().toLowerCase() === edu.institution.trim().toLowerCase()
+      );
+      if (!alreadyExists && edu.institution) {
+        merged.push({
+          institution: edu.institution,
+          degree: edu.degree || "",
+          detail: edu.detail || "",
+          dates: edu.dates || "",
+        });
+      }
+    }
     return merged;
   }
 
@@ -351,7 +386,7 @@ export default function ResumeEditor() {
           />
 
           <div style={{ marginTop: 12 }}>
-            <strong style={{marginRight:12}}>Profile Links</strong>
+            <strong>Profile Links</strong>
             {(resume.personal_info?.links || []).map((link, index) => (
               <div key={index} className="bullet-row">
                 <input

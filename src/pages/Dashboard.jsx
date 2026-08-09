@@ -7,16 +7,17 @@ export default function Dashboard() {
   const [resumes, setResumes] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [loading, setLoading] = useState(true);
-  const { token } = useAuth();
+  const { token, initializing } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-    fetchResumes();
-  }, [token]);
+  if (initializing) return;
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+  fetchResumes();
+}, [token, initializing]);
 
   async function fetchResumes() {
     try {
