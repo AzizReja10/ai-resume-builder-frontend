@@ -6,17 +6,21 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loggingIn, setLoggingIn] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    setLoggingIn(true);
     try {
       await login(email, password);
       navigate("/dashboard");
     } catch (err) {
       setError("Invalid email or password");
+    } finally {
+      setLoggingIn(false);
     }
   }
 
@@ -39,8 +43,8 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button className="btn-primary" type="submit">
-          Login
+        <button className="btn-primary" type="submit" disabled={loggingIn}>
+          {loggingIn ? <span className="btn-spinner" /> : "Login"}
         </button>
         <p>
           Don't have an account? <Link to="/signup">Sign up</Link>

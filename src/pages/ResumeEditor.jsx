@@ -40,6 +40,7 @@ export default function ResumeEditor() {
     setSaving(true);
     try {
       await client.patch(`/resumes/${id}`, {
+        title: resume.title,
         personal_info: resume.personal_info,
         education: resume.education,
         experience: resume.experience,
@@ -256,9 +257,6 @@ export default function ResumeEditor() {
       const res = await client.post(`/resumes/${id}/optimize-bullet`, {
         raw_bullet: rawBullet,
       });
-      console.log("DEBUG projectIndex:", projectIndex, "bulletIndex:", bulletIndex);
-      console.log("DEBUG rawBullet sent:", rawBullet);
-      console.log("DEBUG rewritten received:", res.data.rewritten);
       updateBullet(projectIndex, bulletIndex, res.data.rewritten);
     } catch (err) {
       console.error(err);
@@ -367,7 +365,12 @@ export default function ResumeEditor() {
       <button className="btn-ghost" onClick={() => navigate("/dashboard")}>
         ← Back
       </button>
-      <h2>{resume.title}</h2>
+      <input
+        className="resume-title-input"
+        value={resume.title}
+        onChange={(e) => setResume({ ...resume, title: e.target.value })}
+        placeholder="Resume Title"
+      />
 
       {/* Personal Info */}
       <section>

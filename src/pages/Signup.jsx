@@ -7,17 +7,22 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [error, setError] = useState("");
-  const { signup } = useAuth();
+  const [submitting, setSubmitting] = useState(false);
+  const { signup, login } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    setSubmitting(true);
     try {
       await signup(email, password, fullName);
-      navigate("/login");
+      await login(email, password);
+      navigate("/dashboard");
     } catch (err) {
       setError("Signup failed — email may already be in use");
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -47,8 +52,8 @@ export default function Signup() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button className="btn-primary" type="submit">
-          Sign Up
+        <button className="btn-primary" type="submit" disabled={submitting}>
+          {submitting ? <span className="btn-spinner" /> : "Sign Up"}
         </button>
         <p>
           Already have an account? <Link to="/login">Login</Link>
