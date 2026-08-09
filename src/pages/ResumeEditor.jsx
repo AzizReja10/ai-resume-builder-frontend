@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../api/client";
-import { useAuth } from "../context/AuthContext";
+
 export default function ResumeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
-   const { token, initializing } = useAuth();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -16,14 +15,10 @@ export default function ResumeEditor() {
   const [syncingSkills, setSyncingSkills] = useState(false);
   const [skillsSyncError, setSkillsSyncError] = useState("");
 
-useEffect(() => {
-    if (initializing) return;
-    if (!token) {
-      navigate("/login");
-      return;
-    }
+  useEffect(() => {
     fetchResume();
-  }, [id, token, initializing]);
+  }, [id]);
+
   async function fetchResume() {
     try {
       const res = await client.get(`/resumes/${id}`);
@@ -255,6 +250,9 @@ useEffect(() => {
       const res = await client.post(`/resumes/${id}/optimize-bullet`, {
         raw_bullet: rawBullet,
       });
+      console.log("DEBUG projectIndex:", projectIndex, "bulletIndex:", bulletIndex);
+      console.log("DEBUG rawBullet sent:", rawBullet);
+      console.log("DEBUG rewritten received:", res.data.rewritten);
       updateBullet(projectIndex, bulletIndex, res.data.rewritten);
     } catch (err) {
       console.error(err);
