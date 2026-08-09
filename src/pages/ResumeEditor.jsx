@@ -366,6 +366,7 @@ export default function ResumeEditor() {
         ← Back
       </button>
        <br/>
+       <br/>
       <input
         className="resume-title-input" style={{borderBottom:"1px solid black"}}
         value={resume.title}
@@ -375,7 +376,7 @@ export default function ResumeEditor() {
 
       {/* Personal Info */}
       <section>
-        <h3>Personal Info</h3>
+        <h3 style={{marginBottom:5}}>Personal Info</h3>
         <div className="card">
           <input
             placeholder="Name"
