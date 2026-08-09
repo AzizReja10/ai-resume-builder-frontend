@@ -5,6 +5,7 @@ import client from "../api/client";
 export default function ResumeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
+   const { token, initializing } = useAuth();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -15,10 +16,14 @@ export default function ResumeEditor() {
   const [syncingSkills, setSyncingSkills] = useState(false);
   const [skillsSyncError, setSkillsSyncError] = useState("");
 
-  useEffect(() => {
+useEffect(() => {
+    if (initializing) return;
+    if (!token) {
+      navigate("/login");
+      return;
+    }
     fetchResume();
-  }, [id]);
-
+  }, [id, token, initializing]);
   async function fetchResume() {
     try {
       const res = await client.get(`/resumes/${id}`);
