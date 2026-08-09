@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 export default function ResumeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { token, initializing } = useAuth();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -394,7 +395,7 @@ export default function ResumeEditor() {
           />
 
           <div style={{ marginTop: 12 }}>
-            <strong style={{marginRight:12}}>Profile Links</strong>
+            <strong style={{marginRight:14}}>Profile Links</strong>
             {(resume.personal_info?.links || []).map((link, index) => (
               <div key={index} className="bullet-row">
                 <input
