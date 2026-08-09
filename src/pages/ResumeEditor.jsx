@@ -423,7 +423,7 @@ export default function ResumeEditor() {
 
       {/* Projects */}
       <section>
-        <div className="section-header">
+        <div className="section-header" style={{marginBottom:12}}>
           <h3>Projects</h3>
           <button className="btn-primary" onClick={addProject}>
             + Add Project
@@ -473,7 +473,7 @@ export default function ResumeEditor() {
             />
 
             <div style={{ marginTop: 8 }}>
-              <strong>Bullets</strong>
+              <strong style={{marginRight:12}}>Bullets</strong>
               {project.bullets.map((bullet, bIndex) => (
                 <div key={bIndex} className="bullet-row">
                   <input
@@ -510,7 +510,7 @@ export default function ResumeEditor() {
 
       {/* Education */}
       <section>
-        <div className="section-header">
+        <div className="section-header" style={{marginBottom:12}}>
           <h3>Education</h3>
           <button className="btn-primary" onClick={addEducation}>
             + Add Education
@@ -552,7 +552,7 @@ export default function ResumeEditor() {
 
       {/* Skills */}
       <section>
-        <div className="section-header">
+        <div className="section-header" style={{marginBottom:12}}>
           <h3>Skills</h3>
           <button className="btn-primary" onClick={addSkillGroup}>
             + Add Skill Group
