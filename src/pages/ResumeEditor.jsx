@@ -376,7 +376,7 @@ export default function ResumeEditor() {
 
       {/* Personal Info */}
       <section>
-        <h3 style={{marginBottom:5}}>Personal Info</h3>
+        <h3 style={{marginBottom:12}}>Personal Info</h3>
         <div className="card">
           <input
             placeholder="Name"
