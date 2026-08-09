@@ -365,8 +365,9 @@ export default function ResumeEditor() {
       <button className="btn-ghost" onClick={() => navigate("/dashboard")}>
         ← Back
       </button>
+       <br/>
       <input
-        className="resume-title-input"
+        className="resume-title-input" style={{borderBottom:"1px solid black"}}
         value={resume.title}
         onChange={(e) => setResume({ ...resume, title: e.target.value })}
         placeholder="Resume Title"
