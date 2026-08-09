@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../api/client";
-
+import { useAuth } from "../context/AuthContext";
 export default function ResumeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
