@@ -174,11 +174,11 @@ button {
   background: #fff;
   color: var(--text);
   cursor: pointer;
-  transition: transform .08s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+  transition: box-shadow .15s ease, background .15s ease, border-color .15s ease, color .15s ease;
 }
-button:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
-button:active { transform: translateY(0); box-shadow: none; }
-button:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+button:hover { box-shadow: var(--shadow-hover); }
+button:active { box-shadow: none; }
+button:disabled { opacity: .6; cursor: not-allowed; box-shadow: none; }
 
 button.btn-primary {
   background: var(--primary); border-color: var(--primary); color: #fff;
@@ -516,11 +516,10 @@ ul li span { font-weight: 600; }
   color: inherit;
   background: linear-gradient(120deg, #5b4dff 0%, #7c3aed 55%, #a78bfa 100%);
   box-shadow: 0 16px 40px rgba(91, 77, 255, 0.28);
-  transition: transform .15s ease, box-shadow .15s ease;
+  transition: box-shadow .15s ease;
 }
 
 .feature-banner:hover {
-  transform: translateY(-2px);
   box-shadow: 0 20px 44px rgba(91, 77, 255, 0.34);
 }
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import client from "../api/client";
+import MotionButton from "../components/MotionButton";
 
 function ScoreRing({ score }) {
   const radius = 56;
@@ -123,13 +124,13 @@ export default function ResumeAnalyzer() {
           </span>
         </label>
 
-        <button
+        <MotionButton
           className="btn-primary analyzer-submit"
           onClick={handleAnalyze}
           disabled={!file || analyzing}
         >
           {analyzing ? <span className="btn-spinner" /> : "Analyze resume"}
-        </button>
+        </MotionButton>
         {error && <p className="error-banner">{error}</p>}
       </div>
 

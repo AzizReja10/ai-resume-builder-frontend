@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import client from "../api/client";
+import MotionButton, { MotionLink } from "../components/MotionButton";
 
 export default function Dashboard() {
   const [resumes, setResumes] = useState([]);
@@ -56,7 +57,13 @@ export default function Dashboard() {
         </p>
       </div>
 
-      <Link to="/analyzer" className="feature-banner">
+      <MotionLink
+        to="/analyzer"
+        className="feature-banner"
+        whileHover={{ y: -3, scale: 1.015 }}
+        whileTap={{ y: 0, scale: 0.99 }}
+        transition={{ type: "spring", stiffness: 420, damping: 22 }}
+      >
         <span className="feature-banner-icon" aria-hidden>
           ✦
         </span>
@@ -67,7 +74,7 @@ export default function Dashboard() {
         <span className="feature-banner-arrow" aria-hidden>
           →
         </span>
-      </Link>
+      </MotionLink>
 
       <form onSubmit={handleCreate} className="create-bar">
         <input
@@ -76,9 +83,9 @@ export default function Dashboard() {
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
         />
-        <button className="btn-primary" type="submit">
+        <MotionButton className="btn-primary" type="submit">
           Create
-        </button>
+        </MotionButton>
       </form>
 
       <p className="fine-print">
@@ -101,18 +108,18 @@ export default function Dashboard() {
                 <span className="resume-card-title">{r.title}</span>
               </div>
               <div className="resume-card-actions">
-                <button
+                <MotionButton
                   className="btn-primary"
                   onClick={() => navigate(`/resumes/${r.id}`)}
                 >
                   Edit
-                </button>
-                <button
+                </MotionButton>
+                <MotionButton
                   className="btn-danger"
                   onClick={() => handleDelete(r.id, r.title)}
                 >
                   Delete
-                </button>
+                </MotionButton>
               </div>
             </li>
           ))}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../api/client";
+import MotionButton from "../components/MotionButton";
 export default function ResumeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -418,14 +419,14 @@ export default function ResumeEditor() {
                   value={link.url}
                   onChange={(e) => updateLink(index, "url", e.target.value)}
                 />
-                <button className="btn-danger" onClick={() => removeLink(index)}>
+                <MotionButton className="btn-danger" onClick={() => removeLink(index)}>
                   ✕
-                </button>
+                </MotionButton>
               </div>
             ))}
-            <button className="btn-primary" onClick={addLink} style={{ marginTop: 8 }}>
+            <MotionButton className="btn-primary" onClick={addLink} style={{ marginTop: 8 }}>
               + Add Link
-            </button>
+            </MotionButton>
           </div>
         </div>
       </section>
@@ -434,9 +435,9 @@ export default function ResumeEditor() {
       <section className="editor-section">
         <div className="section-header">
           <h3>Projects</h3>
-          <button className="btn-primary" onClick={addProject}>
+          <MotionButton className="btn-primary" onClick={addProject}>
             + Add project
-          </button>
+          </MotionButton>
         </div>
 
         <div className="card ai-panel">
@@ -451,9 +452,9 @@ export default function ResumeEditor() {
               onChange={(e) => setGithubUrl(e.target.value)}
               disabled={generating}
             />
-            <button className="btn-primary" onClick={generateProjectFromGithub} disabled={generating}>
+            <MotionButton className="btn-primary" onClick={generateProjectFromGithub} disabled={generating}>
               {generating ? "Generating..." : "Generate"}
-            </button>
+            </MotionButton>
           </div>
           {generateError && <p className="error-banner" style={{ marginTop: 8 }}>{generateError}</p>}
         </div>
@@ -489,30 +490,30 @@ export default function ResumeEditor() {
                     value={bullet}
                     onChange={(e) => updateBullet(pIndex, bIndex, e.target.value)}
                   />
-                  <button className="btn-ghost" onClick={() => optimizeBullet(pIndex, bIndex)}>
+                  <MotionButton className="btn-ghost" onClick={() => optimizeBullet(pIndex, bIndex)}>
                     ✨ Optimize
-                  </button>
-                  <button className="btn-danger" onClick={() => removeBullet(pIndex, bIndex)}>
+                  </MotionButton>
+                  <MotionButton className="btn-danger" onClick={() => removeBullet(pIndex, bIndex)}>
                     ✕
-                  </button>
+                  </MotionButton>
                 </div>
               ))}
-              <button
+              <MotionButton
                 className="btn-primary"
                 onClick={() => addBullet(pIndex)}
                 style={{ marginTop: 8 }}
               >
                 + Add Bullet
-              </button>
+              </MotionButton>
             </div>
 
-            <button
+            <MotionButton
               className="btn-danger"
               onClick={() => removeProject(pIndex)}
               style={{ marginTop: 12 }}
             >
               Remove Project
-            </button>
+            </MotionButton>
           </div>
         ))}
       </section>
@@ -521,9 +522,9 @@ export default function ResumeEditor() {
       <section className="editor-section">
         <div className="section-header">
           <h3>Education</h3>
-          <button className="btn-primary" onClick={addEducation}>
+          <MotionButton className="btn-primary" onClick={addEducation}>
             + Add education
-          </button>
+          </MotionButton>
         </div>
 
         {resume.education.map((edu, index) => (
@@ -548,13 +549,13 @@ export default function ResumeEditor() {
               value={edu.dates}
               onChange={(e) => updateEducation(index, "dates", e.target.value)}
             />
-            <button
+            <MotionButton
               className="btn-danger"
               onClick={() => removeEducation(index)}
               style={{ marginTop: 8 }}
             >
               Remove
-            </button>
+            </MotionButton>
           </div>
         ))}
       </section>
@@ -563,9 +564,9 @@ export default function ResumeEditor() {
       <section className="editor-section">
         <div className="section-header">
           <h3>Skills</h3>
-          <button className="btn-primary" onClick={addSkillGroup}>
+          <MotionButton className="btn-primary" onClick={addSkillGroup}>
             + Add skill group
-          </button>
+          </MotionButton>
         </div>
 
         <div className="card ai-panel">
@@ -580,9 +581,9 @@ export default function ResumeEditor() {
               onChange={(e) => setSkillsSyncUrl(e.target.value)}
               disabled={syncingSkills}
             />
-            <button className="btn-primary" onClick={syncSkillsFromGithub} disabled={syncingSkills}>
+            <MotionButton className="btn-primary" onClick={syncSkillsFromGithub} disabled={syncingSkills}>
               {syncingSkills ? "Syncing..." : "Sync"}
-            </button>
+            </MotionButton>
           </div>
           {skillsSyncError && <p className="error-banner" style={{ marginTop: 8 }}>{skillsSyncError}</p>}
         </div>
@@ -599,13 +600,13 @@ export default function ResumeEditor() {
               value={group.items.join(", ")}
               onChange={(e) => updateSkillItems(index, e.target.value)}
             />
-            <button
+            <MotionButton
               className="btn-danger"
               onClick={() => removeSkillGroup(index)}
               style={{ marginTop: 8 }}
             >
               Remove
-            </button>
+            </MotionButton>
           </div>
         ))}
       </section>
@@ -614,9 +615,9 @@ export default function ResumeEditor() {
       <section className="editor-section">
         <div className="section-header">
           <h3>Extracurricular</h3>
-          <button className="btn-primary" onClick={addExtracurricular}>
+          <MotionButton className="btn-primary" onClick={addExtracurricular}>
             + Add line
-          </button>
+          </MotionButton>
         </div>
 
         {resume.extracurricular.map((line, index) => (
@@ -625,21 +626,21 @@ export default function ResumeEditor() {
               value={line}
               onChange={(e) => updateExtracurricular(index, e.target.value)}
             />
-            <button className="btn-danger" onClick={() => removeExtracurricular(index)}>
+            <MotionButton className="btn-danger" onClick={() => removeExtracurricular(index)}>
               ✕
-            </button>
+            </MotionButton>
           </div>
         ))}
       </section>
 
       {/* Save / Export */}
       <div className="action-bar">
-        <button className="btn-primary" onClick={handleSave} disabled={saving}>
+        <MotionButton className="btn-primary" onClick={handleSave} disabled={saving}>
           {saving ? "Saving…" : "Save"}
-        </button>
-        <button className="btn-success" onClick={handleExportPdf}>
+        </MotionButton>
+        <MotionButton className="btn-success" onClick={handleExportPdf}>
           Export PDF
-        </button>
+        </MotionButton>
       </div>
     </div>
   );
