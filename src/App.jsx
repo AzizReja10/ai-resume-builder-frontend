@@ -6,12 +6,16 @@ import ResumeAnalyzer from "./pages/ResumeAnalyzer";
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/analyzer" element={<ResumeAnalyzer />} />
-        <Route path="/resumes/:id" element={<ResumeEditor />} />
-      </Routes>
+      <div className="app-shell">
+        <Header />
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/analyzer" element={<ResumeAnalyzer />} />
+            <Route path="/resumes/:id" element={<ResumeEditor />} />
+          </Routes>
+        </main>
+      </div>
     </BrowserRouter>
   );
 }

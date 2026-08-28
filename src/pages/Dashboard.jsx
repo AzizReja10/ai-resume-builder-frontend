@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import client from "../api/client";
 
 export default function Dashboard() {
@@ -43,27 +43,36 @@ export default function Dashboard() {
     }
   }
 
-  if (loading) return <p className="loading-text">Loading...</p>;
+  if (loading) return <p className="loading-text">Loading your workspace…</p>;
 
   return (
-    <div>
-      <div className="page-header">
-        <h2>Your Resumes</h2>
+    <div className="dashboard-page">
+      <div className="page-hero">
+        <p className="eyebrow">Workspace</p>
+        <h2>Your resumes</h2>
+        <p>
+          Draft, refine, and export — or drop in an existing PDF and let AI score
+          it.
+        </p>
       </div>
-      <Link to="/analyzer" className="btn-primary" style={{ display: "inline-block", marginBottom: 16, textDecoration: "none" }}>
-  ✨ Analyze an Existing Resume
-</Link>
-      <p style={{ marginTop: -8, marginBottom: 16, fontSize: 13 }}>
-        Your resumes are saved to this browser — no account needed. Clearing your browser data will lose access to them.
-      </p>
 
-      <form
-        onSubmit={handleCreate}
-        style={{ maxWidth: "none", margin: "20px 0", flexDirection: "row" }}
-      >
+      <Link to="/analyzer" className="feature-banner">
+        <span className="feature-banner-icon" aria-hidden>
+          ✦
+        </span>
+        <span className="feature-banner-copy">
+          <strong>Analyze an existing resume</strong>
+          <span>Upload a PDF for a score, strengths, and specific edits.</span>
+        </span>
+        <span className="feature-banner-arrow" aria-hidden>
+          →
+        </span>
+      </Link>
+
+      <form onSubmit={handleCreate} className="create-bar">
         <input
           type="text"
-          placeholder="New resume title"
+          placeholder="Name this resume — e.g. Product designer 2026"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
         />
@@ -72,21 +81,43 @@ export default function Dashboard() {
         </button>
       </form>
 
-      <ul>
-        {resumes.map((r) => (
-          <li key={r.id}>
-            <span>{r.title}</span>
-            <div style={{ display: "flex", gap: 8 }}>
-              <button className="btn-primary" onClick={() => navigate(`/resumes/${r.id}`)}>
-                Edit
-              </button>
-              <button className="btn-danger" onClick={() => handleDelete(r.id, r.title)}>
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <p className="fine-print">
+        Saved in this browser — no account needed. Clearing site data removes
+        access.
+      </p>
+
+      {resumes.length === 0 ? (
+        <div className="empty-state">
+          <p>No resumes yet. Create one above, or analyze a PDF to get started.</p>
+        </div>
+      ) : (
+        <ul className="resume-list">
+          {resumes.map((r) => (
+            <li key={r.id} className="resume-card">
+              <div className="resume-card-meta">
+                <span className="resume-card-mark" aria-hidden>
+                  📄
+                </span>
+                <span className="resume-card-title">{r.title}</span>
+              </div>
+              <div className="resume-card-actions">
+                <button
+                  className="btn-primary"
+                  onClick={() => navigate(`/resumes/${r.id}`)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn-danger"
+                  onClick={() => handleDelete(r.id, r.title)}
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

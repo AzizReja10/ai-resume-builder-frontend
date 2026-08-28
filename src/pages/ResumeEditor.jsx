@@ -364,21 +364,23 @@ export default function ResumeEditor() {
   if (!resume) return <p className="loading-text">Resume not found.</p>;
 
   return (
-    <div>
-      <button className="btn-ghost" onClick={() => navigate("/")}>
-        ← Back
+    <div className="editor-page">
+      <button className="back-link" onClick={() => navigate("/")}>
+        ← Dashboard
       </button>
-      <br></br>
-      <input
-        className="resume-title-input"
-        value={resume.title}
-        onChange={(e) => setResume({ ...resume, title: e.target.value })}
-        placeholder="Resume Title"
-      />
+      <div className="editor-title-row">
+        <p className="eyebrow">Editing</p>
+        <input
+          className="resume-title-input"
+          value={resume.title}
+          onChange={(e) => setResume({ ...resume, title: e.target.value })}
+          placeholder="Resume title"
+        />
+      </div>
 
       {/* Personal Info */}
-      <section>
-        <h3>Personal Info</h3>
+      <section className="editor-section">
+        <h3>Personal info</h3>
         <div className="card">
           <input
             placeholder="Name"
@@ -401,8 +403,8 @@ export default function ResumeEditor() {
             onChange={(e) => updatePersonalInfo("email", e.target.value)}
           />
 
-          <div style={{ marginTop: 12 }}>
-            <strong style={{marginRight:14}}>Profile Links</strong>
+          <div className="editor-subsection">
+            <strong>Profile links</strong>
             {(resume.personal_info?.links || []).map((link, index) => (
               <div key={index} className="bullet-row">
                 <input
@@ -429,18 +431,18 @@ export default function ResumeEditor() {
       </section>
 
       {/* Projects */}
-      <section>
-        <div className="section-header" style={{marginBottom:12}}>
+      <section className="editor-section">
+        <div className="section-header">
           <h3>Projects</h3>
           <button className="btn-primary" onClick={addProject}>
-            + Add Project
+            + Add project
           </button>
         </div>
 
-        <div className="card" style={{ background: "#f8f9fe" }}>
-          <strong>✨ Generate from GitHub</strong>
-          <p style={{ margin: "4px 0 8px", fontSize: 13 }}>
-            Paste a public repo link — AI will fill in the name, tech tags, and bullets for you.
+        <div className="card ai-panel">
+          <strong>Generate from GitHub</strong>
+          <p>
+            Paste a public repo link — AI will fill in the name, tech tags, and bullets.
           </p>
           <div className="bullet-row">
             <input
@@ -479,8 +481,8 @@ export default function ResumeEditor() {
               onChange={(e) => updateProject(pIndex, "live_url", e.target.value)}
             />
 
-            <div style={{ marginTop: 8 }}>
-              <strong style={{marginRight:12}}>Bullets</strong>
+            <div className="editor-subsection">
+              <strong>Bullets</strong>
               {project.bullets.map((bullet, bIndex) => (
                 <div key={bIndex} className="bullet-row">
                   <input
@@ -516,11 +518,11 @@ export default function ResumeEditor() {
       </section>
 
       {/* Education */}
-      <section>
-        <div className="section-header" style={{marginBottom:12}}>
+      <section className="editor-section">
+        <div className="section-header">
           <h3>Education</h3>
           <button className="btn-primary" onClick={addEducation}>
-            + Add Education
+            + Add education
           </button>
         </div>
 
@@ -558,18 +560,18 @@ export default function ResumeEditor() {
       </section>
 
       {/* Skills */}
-      <section>
-        <div className="section-header" style={{marginBottom:12}}>
+      <section className="editor-section">
+        <div className="section-header">
           <h3>Skills</h3>
           <button className="btn-primary" onClick={addSkillGroup}>
-            + Add Skill Group
+            + Add skill group
           </button>
         </div>
 
-        <div className="card" style={{ background: "#f8f9fe" }}>
-          <strong>✨ Sync from GitHub Profile</strong>
-          <p style={{ margin: "4px 0 8px", fontSize: 13 }}>
-            Paste your GitHub profile URL — AI will detect languages across your public repos and add them here.
+        <div className="card ai-panel">
+          <strong>Sync from GitHub profile</strong>
+          <p>
+            Paste your GitHub profile URL — AI will detect languages across public repos.
           </p>
           <div className="bullet-row">
             <input
@@ -609,11 +611,11 @@ export default function ResumeEditor() {
       </section>
 
       {/* Extracurricular */}
-      <section>
+      <section className="editor-section">
         <div className="section-header">
           <h3>Extracurricular</h3>
           <button className="btn-primary" onClick={addExtracurricular}>
-            + Add Line
+            + Add line
           </button>
         </div>
 
@@ -633,7 +635,7 @@ export default function ResumeEditor() {
       {/* Save / Export */}
       <div className="action-bar">
         <button className="btn-primary" onClick={handleSave} disabled={saving}>
-          {saving ? "Saving..." : "Save"}
+          {saving ? "Saving…" : "Save"}
         </button>
         <button className="btn-success" onClick={handleExportPdf}>
           Export PDF

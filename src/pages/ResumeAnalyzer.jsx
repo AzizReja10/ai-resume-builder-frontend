@@ -2,16 +2,60 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import client from "../api/client";
 
+function ScoreRing({ score }) {
+  const radius = 56;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (Math.min(score, 100) / 100) * circumference;
+  const tone = score >= 80 ? "good" : score >= 60 ? "mid" : "low";
+
+  return (
+    <div className={`score-ring score-ring--${tone}`}>
+      <svg viewBox="0 0 132 132" aria-hidden>
+        <circle className="score-ring-track" cx="66" cy="66" r={radius} />
+        <circle
+          className="score-ring-value"
+          cx="66"
+          cy="66"
+          r={radius}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+        />
+      </svg>
+      <div className="score-ring-label">
+        <strong>{score}</strong>
+        <span>/100</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ResumeAnalyzer() {
   const [file, setFile] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  const [dragOver, setDragOver] = useState(false);
 
-  function handleFileChange(e) {
-    setFile(e.target.files[0]);
+  function setSelectedFile(nextFile) {
+    if (!nextFile) return;
+    setFile(nextFile);
     setResult(null);
     setError("");
+  }
+
+  function handleFileChange(e) {
+    setSelectedFile(e.target.files[0]);
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    setDragOver(false);
+    const dropped = e.dataTransfer.files?.[0];
+    if (dropped && dropped.type === "application/pdf") {
+      setSelectedFile(dropped);
+    } else {
+      setError("Please drop a PDF resume.");
+    }
   }
 
   async function handleAnalyze() {
@@ -38,75 +82,102 @@ export default function ResumeAnalyzer() {
     }
   }
 
-  function scoreColor(score) {
-    if (score >= 80) return "#16a34a";
-    if (score >= 60) return "#d97706";
-    return "#dc2626";
-  }
-
   return (
-    <div>
-      <Link to="/" className="btn-ghost" style={{ display: "inline-block", marginBottom: 12 }}>
-        ← Back
+    <div className="analyzer-page">
+      <Link to="/" className="back-link">
+        ← Dashboard
       </Link>
-      <h2>Resume Analyzer</h2>
-      <p>Upload your resume as a PDF — AI will score it and suggest specific improvements.</p>
 
-      <div className="card">
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={handleFileChange}
-          style={{ marginBottom: 12 }}
-        />
-        <button className="btn-primary" onClick={handleAnalyze} disabled={!file || analyzing}>
-          {analyzing ? <span className="btn-spinner" /> : "Analyze Resume"}
-        </button>
-        {error && <p className="error-banner" style={{ marginTop: 12 }}>{error}</p>}
+      <div className="page-hero">
+        <p className="eyebrow">AI review</p>
+        <h2>Resume analyzer</h2>
+        <p>
+          Upload a PDF. You’ll get an overall score, what’s working, and concrete
+          edits — section by section.
+        </p>
       </div>
 
+      <div className="analyzer-upload card">
+        <label
+          className={`dropzone ${dragOver ? "is-dragover" : ""} ${file ? "has-file" : ""}`}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setDragOver(true);
+          }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={handleDrop}
+        >
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={handleFileChange}
+          />
+          <span className="dropzone-icon" aria-hidden>
+            {file ? "✓" : "↑"}
+          </span>
+          <span className="dropzone-title">
+            {file ? file.name : "Drop your PDF here"}
+          </span>
+          <span className="dropzone-hint">
+            {file ? "Click to choose a different file" : "or click to browse — PDF only"}
+          </span>
+        </label>
+
+        <button
+          className="btn-primary analyzer-submit"
+          onClick={handleAnalyze}
+          disabled={!file || analyzing}
+        >
+          {analyzing ? <span className="btn-spinner" /> : "Analyze resume"}
+        </button>
+        {error && <p className="error-banner">{error}</p>}
+      </div>
+
+      {analyzing && (
+        <p className="analyzing-hint">Reading your resume and drafting feedback…</p>
+      )}
+
       {result && (
-        <div style={{ marginTop: 24 }}>
-          <div className="card" style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 14, color: "#6b7280", marginBottom: 4 }}>Overall Score</div>
-            <div style={{ fontSize: 48, fontWeight: 800, color: scoreColor(result.score) }}>
-              {result.score}
-              <span style={{ fontSize: 20, color: "#9ca3af" }}>/100</span>
+        <div className="analyzer-results">
+          <div className="card score-card">
+            <ScoreRing score={result.score} />
+            <div className="score-copy">
+              <p className="eyebrow">Overall score</p>
+              <p className="score-summary">{result.summary}</p>
             </div>
-            <p style={{ marginTop: 8 }}>{result.summary}</p>
           </div>
 
-          <div className="card">
-            <h3>✅ Strengths</h3>
-            <ul style={{ listStyle: "disc", paddingLeft: 20, background: "none", boxShadow: "none" }}>
-              {result.strengths.map((s, i) => (
-                <li key={i} style={{ background: "none", boxShadow: "none", padding: "2px 0", display: "list-item" }}>
-                  {s}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="insight-grid">
+            <div className="card insight-card insight-card--good">
+              <h3>Strengths</h3>
+              <ul className="insight-list">
+                {result.strengths.map((s, i) => (
+                  <li key={i}>{s}</li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="card">
-            <h3>🔧 Suggested Improvements</h3>
-            <ul style={{ listStyle: "disc", paddingLeft: 20, background: "none", boxShadow: "none" }}>
-              {result.improvements.map((imp, i) => (
-                <li key={i} style={{ background: "none", boxShadow: "none", padding: "2px 0", display: "list-item" }}>
-                  {imp}
-                </li>
-              ))}
-            </ul>
+            <div className="card insight-card insight-card--improve">
+              <h3>Suggested improvements</h3>
+              <ul className="insight-list">
+                {result.improvements.map((imp, i) => (
+                  <li key={i}>{imp}</li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {result.section_feedback.length > 0 && (
-            <div className="card">
-              <h3>Section-by-Section Feedback</h3>
-              {result.section_feedback.map((sf, i) => (
-                <div key={i} style={{ marginBottom: 10 }}>
-                  <strong>{sf.section}</strong>
-                  <p style={{ margin: "2px 0 0" }}>{sf.feedback}</p>
-                </div>
-              ))}
+            <div className="card section-feedback">
+              <h3>Section-by-section</h3>
+              <div className="section-feedback-list">
+                {result.section_feedback.map((sf, i) => (
+                  <div key={i} className="section-feedback-item">
+                    <strong>{sf.section}</strong>
+                    <p>{sf.feedback}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
