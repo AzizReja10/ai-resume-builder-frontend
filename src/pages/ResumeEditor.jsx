@@ -365,9 +365,10 @@ export default function ResumeEditor() {
 
   return (
     <div>
-      <button className="btn-ghost" onClick={() => navigate("/dashboard")}>
+      <button className="btn-ghost" onClick={() => navigate("/")}>
         ← Back
       </button>
+      <br></br>
       <input
         className="resume-title-input"
         value={resume.title}
