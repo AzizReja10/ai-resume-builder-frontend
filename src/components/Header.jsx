@@ -1,18 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Dashboard from "./pages/Dashboard";
-import ResumeEditor from "./pages/ResumeEditor";
+import { Link } from "react-router-dom";
 
-function App() {
+export default function Header() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/resumes/:id" element={<ResumeEditor />} />
-      </Routes>
-    </BrowserRouter>
+    <header className="app-header">
+      <Link to="/" className="app-header-brand">
+        📄 AI Resume Builder
+      </Link>
+    </header>
   );
 }
-
-export default App;
