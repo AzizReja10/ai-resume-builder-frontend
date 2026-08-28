@@ -11,6 +11,16 @@
       rel="stylesheet"
     />
     <title>AI Resume Builder</title>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("resume-studio-theme");
+          if (theme === "night" || theme === "day") {
+            document.documentElement.setAttribute("data-theme", theme);
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
