@@ -1,23 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import client from "../api/client";
 
 export default function Dashboard() {
   const [resumes, setResumes] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [loading, setLoading] = useState(true);
-  const { token, initializing } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-  if (initializing) return;
-  if (!token) {
-    navigate("/login");
-    return;
-  }
-  fetchResumes();
-}, [token, initializing]);
+    fetchResumes();
+  }, []);
 
   async function fetchResumes() {
     try {
@@ -57,6 +50,9 @@ export default function Dashboard() {
       <div className="page-header">
         <h2>Your Resumes</h2>
       </div>
+      <p style={{ marginTop: -8, marginBottom: 16, fontSize: 13 }}>
+        Your resumes are saved to this browser — no account needed. Clearing your browser data will lose access to them.
+      </p>
 
       <form
         onSubmit={handleCreate}

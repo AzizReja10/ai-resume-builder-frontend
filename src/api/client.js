@@ -1,13 +1,19 @@
 import axios from "axios";
-const client=axios.create({
-    baseURL:"https://ai-resume-builder-backend-m3v3.onrender.com"
-});
-export function setAuthToken(token) {
-    if(token)
-    {
-        client.defaults.headers.common["Authorization"]=`Bearer ${token}`;
-    }else{
-        delete client.defaults.headers.common["Authorization"];
-    }
+
+function getOrCreateSessionId() {
+  let sessionId = localStorage.getItem("resume_session_id");
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem("resume_session_id", sessionId);
+  }
+  return sessionId;
 }
-export default client
+
+const client = axios.create({
+  baseURL: "https://ai-resume-builder-backend-m3v3.onrender.com",
+  headers: {
+    "X-Session-Id": getOrCreateSessionId(),
+  },
+});
+
+export default client;

@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import client from "../api/client";
-import { useAuth } from "../context/AuthContext";
 export default function ResumeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { token, initializing } = useAuth();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -17,13 +15,8 @@ export default function ResumeEditor() {
   const [skillsSyncError, setSkillsSyncError] = useState("");
 
    useEffect(() => {
-    if (initializing) return;
-    if (!token) {
-      navigate("/login");
-      return;
-    }
     fetchResume();
-  }, [id, token, initializing]);
+  }, [id]);
 
   async function fetchResume() {
     try {
@@ -365,10 +358,8 @@ export default function ResumeEditor() {
       <button className="btn-ghost" onClick={() => navigate("/dashboard")}>
         ← Back
       </button>
-       <br/>
-       <br/>
       <input
-        className="resume-title-input" style={{borderBottom:"1px solid black"}}
+        className="resume-title-input"
         value={resume.title}
         onChange={(e) => setResume({ ...resume, title: e.target.value })}
         placeholder="Resume Title"
@@ -376,7 +367,7 @@ export default function ResumeEditor() {
 
       {/* Personal Info */}
       <section>
-        <h3 style={{marginBottom:12}}>Personal Info</h3>
+        <h3>Personal Info</h3>
         <div className="card">
           <input
             placeholder="Name"

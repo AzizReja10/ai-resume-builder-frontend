@@ -1,26 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Dashboard from "./pages/Dashboard";
+import ResumeEditor from "./pages/ResumeEditor";
 
-export default function Header() {
-  const { token, logout } = useAuth();
-  const navigate = useNavigate();
-
-  function handleLogout() {
-    logout();
-    navigate("/login");
-  }
-
+function App() {
   return (
-    <header className="app-header">
-      <Link to={token ? "/dashboard" : "/login"} className="app-header-brand">
-        📄 AI Resume Builder
-      </Link>
-
-      {token && (
-        <button className="btn-ghost" onClick={handleLogout}>
-          Logout
-        </button>
-      )}
-    </header>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/resumes/:id" element={<ResumeEditor />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
+export default App;
