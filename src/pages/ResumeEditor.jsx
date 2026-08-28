@@ -49,9 +49,19 @@ export default function ResumeEditor() {
   }
 
   async function handleExportPdf() {
-    const res = await client.get(`/resumes/${id}/export-pdf`, {
-      responseType: "blob",
-    });
+    const res = await client.post(
+      `/resumes/export-pdf-preview`,
+      {
+        title: resume.title,
+        personal_info: resume.personal_info,
+        education: resume.education,
+        experience: resume.experience,
+        projects: resume.projects,
+        skills: resume.skills,
+        extracurricular: resume.extracurricular,
+      },
+      { responseType: "blob" }
+    );
     const url = window.URL.createObjectURL(new Blob([res.data]));
     const link = document.createElement("a");
     link.href = url;
@@ -358,7 +368,6 @@ export default function ResumeEditor() {
       <button className="btn-ghost" onClick={() => navigate("/dashboard")}>
         ← Back
       </button>
-      <br></br>
       <input
         className="resume-title-input"
         value={resume.title}
