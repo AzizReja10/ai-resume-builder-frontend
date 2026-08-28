@@ -13,6 +13,7 @@
     "axios": "^1.19.0",
     "motion": "^13.1.1",
     "react": "^19.2.8",
+    "react-day-and-night-toggle": "^2.0.7",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2"
   },
