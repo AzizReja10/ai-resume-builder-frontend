@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import client from "../api/client";
 
 export default function Dashboard() {
@@ -50,6 +50,9 @@ export default function Dashboard() {
       <div className="page-header">
         <h2>Your Resumes</h2>
       </div>
+      <Link to="/analyzer" className="btn-primary" style={{ display: "inline-block", marginBottom: 16, textDecoration: "none" }}>
+  ✨ Analyze an Existing Resume
+</Link>
       <p style={{ marginTop: -8, marginBottom: 16, fontSize: 13 }}>
         Your resumes are saved to this browser — no account needed. Clearing your browser data will lose access to them.
       </p>
