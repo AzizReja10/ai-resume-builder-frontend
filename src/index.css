@@ -474,7 +474,7 @@ ul li span { font-weight: 600; }
 .app-header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .theme-toggle {

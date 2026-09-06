@@ -611,10 +611,10 @@ export default function ResumeEditor() {
         ))}
       </section>
 
-      {/* Extracurricular */}
+      {/* Achievements */}
       <section className="editor-section">
         <div className="section-header">
-          <h3>Extracurricular</h3>
+          <h3>Achievements</h3>
           <MotionButton className="btn-primary" onClick={addExtracurricular}>
             + Add line
           </MotionButton>
