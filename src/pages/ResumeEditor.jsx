@@ -114,7 +114,7 @@ export default function ResumeEditor() {
       ...resume,
       projects: [
         ...resume.projects,
-        { name: "", tags: "", date: "", live_url: "", bullets: [] },
+        { name: "", tags: "", date: "", live_url: "", website_url: "", bullets: [] },
       ],
     });
   }
@@ -481,7 +481,11 @@ export default function ResumeEditor() {
               value={project.live_url}
               onChange={(e) => updateProject(pIndex, "live_url", e.target.value)}
             />
-
+             <input
+              placeholder="Live Website URL (deployed site — shown as 'Live' next to project name)"
+              value={project.website_url || ""}
+              onChange={(e) => updateProject(pIndex, "website_url", e.target.value)}
+            />
             <div className="editor-subsection">
               <strong>Bullets</strong>
               {project.bullets.map((bullet, bIndex) => (
